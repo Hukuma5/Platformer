@@ -11,8 +11,6 @@ public class CharacterControllerScript : MonoBehaviour {
     public Transform groundCheck;
     private float groundRadius = 0.2f;
     public LayerMask whatIsGround;
-    public static float dmg = 1f;
-    public Transform SwordStart;
 
     private void Start()
     {
@@ -33,16 +31,10 @@ public class CharacterControllerScript : MonoBehaviour {
             Flip();
         else if (move < 0 && isFacingRight)
             Flip();
-        SwordStart.transform.Rotate(0, 0, -10);
     }
 
     private void Update()
     {
-        //if (Input.GetKeyDown(KeyCode.Mouse0))
-       // {
-       //     SwordStart
-        //}
-        
         if (isGrounded && Input.GetKeyDown(KeyCode.Space))
         {
             anim.SetBool("Ground", false);
