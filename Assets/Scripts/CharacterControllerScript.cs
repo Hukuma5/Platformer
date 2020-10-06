@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+//test
 public class CharacterControllerScript : MonoBehaviour {
     public float maxSpeed = 5f;
     private bool isFacingRight = true;
