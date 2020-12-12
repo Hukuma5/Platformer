@@ -3,7 +3,6 @@ using System.Collections;
 
 public class CameraFollow2D : MonoBehaviour
 {
-
     public float damping = 1.5f;
     public Vector2 offset = new Vector2(2f, 1f);
     public bool faceLeft;
@@ -34,6 +33,10 @@ public class CameraFollow2D : MonoBehaviour
     {
         if (player)
         {
+            if (Mathf.Abs(player.position.x - gameObject.transform.position.x) > 30f || Mathf.Abs(player.position.y - gameObject.transform.position.y) > 30f)
+            {
+                FindPlayer(true);
+            }
             int currentX = Mathf.RoundToInt(player.position.x);
             if (currentX > lastX) faceLeft = false; else if (currentX < lastX) faceLeft = true;
             lastX = Mathf.RoundToInt(player.position.x);
