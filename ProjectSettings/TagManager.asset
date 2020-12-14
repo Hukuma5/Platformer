@@ -14,6 +14,10 @@ TagManager:
   - Enemy
   - Undefined
   - Platform
+  - Flying_Enemy
+  - Coin
+  - Big_Coin
+  - Spike
   layers:
   - Default
   - TransparentFX
@@ -27,8 +31,8 @@ TagManager:
   - Weapon
   - BG
   - Enemy
-  - 
-  - 
+  - Player
+  - Coins
   - 
   - 
   - 

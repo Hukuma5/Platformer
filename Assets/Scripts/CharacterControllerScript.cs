@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class CharacterControllerScript : MonoBehaviour {
+    public Text moneycount;
     public float maxSpeed = 5f;
     private bool isFacingRight = true;
     private Animator anim;
@@ -30,7 +31,10 @@ public class CharacterControllerScript : MonoBehaviour {
     private bool stunLock = false;
     private float stunLocktimer = 0f;
     public VectorValue pos;
-
+    public int coins;
+    private Vector3 lastpos;
+    public GameObject deatheffect;
+    private Enemy[] isAnyoneHere;
     private void Start()
     {
         hp = maxhp;
@@ -73,6 +77,20 @@ public class CharacterControllerScript : MonoBehaviour {
 
     private void Update()
     {
+        lastpos = transform.position;
+        moneycount.text = coins.ToString();
+        isAnyoneHere = FindObjectsOfType<Enemy>();
+        Debug.Log(isAnyoneHere.Length);
+        var Pl = FindObjectOfType<ChangeLocation>();
+        if (isAnyoneHere.Length == 0)
+        {
+           
+            Pl.CanIGo = true;
+        }
+        else
+        {
+            Pl.CanIGo = false;
+        }
         if (!stunLock)
         {
             if (!dash)
@@ -219,6 +237,29 @@ private void Flip()
             transform.position = new Vector3(data.position[0], data.position[1], data.position[2]);
             stunLocktimer = 0f;
             stunLock = true;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Coin")
+        {
+            Destroy(collision.gameObject);
+            coins += 1;
+        }
+        else if (collision.tag == "Big_Coin")
+        {
+            Destroy(collision.gameObject);
+            coins += 5;
+        }
+        if (collision.tag == "Spike")
+        {
+            hp -= 10;
+            rb.velocity = new Vector2(0f, 0f);
+            stunLocktimer = 0f;
+            stunLock = true;
+            Instantiate(deatheffect, transform.position, Quaternion.identity);
+            transform.position = lastpos;
         }
     }
 }

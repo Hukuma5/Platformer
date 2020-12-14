@@ -7,11 +7,33 @@ using UnityEngine.UI;
 public class ChangeLocation : MonoBehaviour
 {
 
-
+    public GameObject Fly_Enemy;
+    public GameObject Ground_Enemy;
     public Text mytext;
-
-    private int curent_posX = 10;
-    private int curent_posY = 10;
+    public Transform[] f_fly;
+    public Transform[] f_ground;
+    public Transform[] fly_1;
+    public Transform[] ground_1;
+    public Transform[] fly_2;
+    public Transform[] ground_2;
+    public Transform[] fly_3;
+    public Transform[] ground_3;
+    public Transform[] fly_4;
+    public Transform[] ground_4;
+    public Transform[] fly_5;
+    public Transform[] ground_5;
+    public Transform[] fly_6;
+    public Transform[] ground_6;
+    public Transform[] fly_7;
+    public Transform[] ground_7;
+    public Transform[] fly_8;
+    public Transform[] ground_8;
+    public Transform[] fly_9;
+    public Transform[] ground_9;
+    public Transform[] e_fly;
+    public Transform[] e_ground;
+    int curent_posX = 10;
+    int curent_posY = 10;
     public GameObject Player;
     public Transform f0;
     public Transform f1;
@@ -44,6 +66,7 @@ public class ChangeLocation : MonoBehaviour
     string[,] map;
     Dictionary<string, int[]> rooms = new Dictionary<string, int[]>(13);
     private int lastval = 0;
+    public bool CanIGo = true;
     //Dictionary<string, float[]> coord = new Dictionary<string, float[]>(13);
     // Start is called before the first frame update
     void Start()
@@ -286,8 +309,122 @@ public class ChangeLocation : MonoBehaviour
         //coord.Add("f(2)", new float[2] { 15f, -1f });
         //coord.Add("f(3)", new float[2] { 0f, -16f });
     }
-    void Teleport(GameObject Player, string what_door)
+    void TeleportAndSpawn(GameObject Player, string what_door)
     {
+        switch (what_door[0].ToString())
+        {
+            case "f":
+                foreach (var a in f_fly)
+                {
+                    Instantiate(Fly_Enemy, a.position, Quaternion.identity);
+                }
+                foreach (var a in f_ground)
+                {
+                    Instantiate(Ground_Enemy, a.position, Quaternion.identity);
+                }
+                break;
+            case "1":
+                foreach (var a in fly_1)
+                {
+                    Instantiate(Fly_Enemy, a.position, Quaternion.identity);
+                }
+                foreach (var a in ground_1)
+                {
+                    Instantiate(Ground_Enemy, a.position, Quaternion.identity);
+                }
+                break;
+            case "2":
+                foreach (var a in fly_2)
+                {
+                    Instantiate(Fly_Enemy, a.position, Quaternion.identity);
+                }
+                foreach (var a in ground_2)
+                {
+                    Instantiate(Ground_Enemy, a.position, Quaternion.identity);
+                }
+                break;
+            case "3":
+                foreach (var a in fly_3)
+                {
+                    Instantiate(Fly_Enemy, a.position, Quaternion.identity);
+                }
+                foreach (var a in ground_3)
+                {
+                    Instantiate(Ground_Enemy, a.position, Quaternion.identity);
+                }
+                break;
+            case "4":
+                foreach (var a in fly_4)
+                {
+                    Instantiate(Fly_Enemy, a.position, Quaternion.identity);
+                }
+                foreach (var a in ground_4)
+                {
+                    Instantiate(Ground_Enemy, a.position, Quaternion.identity);
+                }
+                break;
+            case "5":
+                foreach (var a in fly_5)
+                {
+                    Instantiate(Fly_Enemy, a.position, Quaternion.identity);
+                }
+                foreach (var a in ground_5)
+                {
+                    Instantiate(Ground_Enemy, a.position, Quaternion.identity);
+                }
+                break;
+            case "6":
+                foreach (var a in fly_6)
+                {
+                    Instantiate(Fly_Enemy, a.position, Quaternion.identity);
+                }
+                foreach (var a in ground_6)
+                {
+                    Instantiate(Ground_Enemy, a.position, Quaternion.identity);
+                }
+                break;
+            case "7":
+                foreach (var a in fly_7)
+                {
+                    Instantiate(Fly_Enemy, a.position, Quaternion.identity);
+                }
+                foreach (var a in ground_7)
+                {
+                    Instantiate(Ground_Enemy, a.position, Quaternion.identity);
+                }
+                break;
+            case "8":
+                foreach (var a in fly_8)
+                {
+                    Instantiate(Fly_Enemy, a.position, Quaternion.identity);
+                }
+                foreach (var a in ground_8)
+                {
+                    Instantiate(Ground_Enemy, a.position, Quaternion.identity);
+                }
+                break;
+            case "9":
+                foreach (var a in fly_9)
+                {
+                    Instantiate(Fly_Enemy, a.position, Quaternion.identity);
+                }
+                foreach (var a in ground_9)
+                {
+                    Instantiate(Ground_Enemy, a.position, Quaternion.identity);
+                }
+                break;
+            case "e":
+                foreach (var a in e_fly)
+                {
+                    Instantiate(Fly_Enemy, a.position, Quaternion.identity);
+                }
+                foreach (var a in e_ground)
+                {
+                    Instantiate(Ground_Enemy, a.position, Quaternion.identity);
+                }
+                break;
+
+        }
         switch (what_door)
         {
             case "f(0)":
@@ -383,40 +520,40 @@ public class ChangeLocation : MonoBehaviour
                 "curent_posX, curent_posY - 1 - " + map[curent_posX + 1, curent_posY] + "\n" + "curent_posX, curent_posY + 1 - " + map[curent_posX - 1, curent_posY] + "\n");
         Debug.Log(curent_posX.ToString() + "<-x  y->" + curent_posY.ToString());
 
-        if (other.tag == "left_door" && map[curent_posX, curent_posY - 1] != "*")
+        if (other.tag == "left_door" && map[curent_posX, curent_posY - 1] != "*" && CanIGo)
         {
             
             if (rooms[map[curent_posX, curent_posY - 1]][2] == 1)
             {
                 
                 //Player.transform.position = new Vector2(coord[map[curent_posX - 1, curent_posY] + "(2)"][0], coord[map[curent_posX - 1, curent_posY] + "(2)"][1]);
-                Teleport(Player, map[curent_posX, curent_posY - 1] + "(2)");
+                TeleportAndSpawn(Player, map[curent_posX, curent_posY - 1] + "(2)");
                 curent_posY -= 1;
             }
         }
-        if (other.tag == "up_door" && map[curent_posX - 1, curent_posY] != "*")
+        if (other.tag == "up_door" && map[curent_posX - 1, curent_posY] != "*" && CanIGo)
         {
             if (rooms[map[curent_posX - 1, curent_posY]][3] == 1)
             {
-                Teleport(Player, map[curent_posX - 1, curent_posY] + "(3)");
+                TeleportAndSpawn(Player, map[curent_posX - 1, curent_posY] + "(3)");
                 curent_posX -= 1;
                 //Player.transform.position = new Vector2(coord[map[curent_posX - 1, curent_posY] + "(3)"][0], coord[map[curent_posX - 1, curent_posY] + "(3)"][1]);
             }
         }
-        if (other.tag == "right_door" && map[curent_posX, curent_posY + 1] != "*")
+        if (other.tag == "right_door" && map[curent_posX, curent_posY + 1] != "*" && CanIGo)
         {
             if (rooms[map[curent_posX, curent_posY + 1]][0] == 1)
             {
-                Teleport(Player, map[curent_posX, curent_posY + 1] + "(0)");
+                TeleportAndSpawn(Player, map[curent_posX, curent_posY + 1] + "(0)");
                 curent_posY += 1;
                 //Player.transform.position = new Vector2(coord[map[curent_posX, curent_posY + 1] + "(0)"][0], coord[map[curent_posX, curent_posY + 1] + "(0)"][1]);
             }
         }
-        if (other.tag == "down_door" && map[curent_posX + 1, curent_posY] != "*")
+        if (other.tag == "down_door" && map[curent_posX + 1, curent_posY] != "*" && CanIGo)
         {
             if (rooms[map[curent_posX + 1, curent_posY]][1] == 1)
             {
-                Teleport(Player, map[curent_posX + 1, curent_posY] + "(1)");
+                TeleportAndSpawn(Player, map[curent_posX + 1, curent_posY] + "(1)");
                 curent_posX += 1;
                 //Player.transform.position = new Vector2(coord[map[curent_posX + 1, curent_posY] + "(1)"][0], coord[map[curent_posX + 1, curent_posY] + "(1)"][1]);
             }

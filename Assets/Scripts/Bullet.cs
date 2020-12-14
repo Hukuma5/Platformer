@@ -17,7 +17,7 @@ public class Bullet : MonoBehaviour
         RaycastHit2D hitinfo = Physics2D.Raycast(transform.position, transform.right, distance, whatIsSolid);
         if (hitinfo.collider != null)
         {
-            if (hitinfo.collider.CompareTag("Enemy"))
+            if ((hitinfo.collider.CompareTag("Enemy")) || (hitinfo.collider.CompareTag("Flying_Enemy")))
             {
                 hitinfo.collider.GetComponent<Enemy>().TakeDamage(damage);
 
