@@ -6,7 +6,13 @@ using UnityEngine.UI;
 
 public class ChangeLocation : MonoBehaviour
 {
-
+    public GameObject doors_open;
+    public GameObject up_doors;
+    public GameObject left_doors;
+    public GameObject down_doors;
+    public GameObject right_doors;
+    public GameObject Exit;
+    private int TimeForExit = 7;
     public GameObject Fly_Enemy;
     public GameObject Ground_Enemy;
     public Text mytext;
@@ -67,6 +73,9 @@ public class ChangeLocation : MonoBehaviour
     Dictionary<string, int[]> rooms = new Dictionary<string, int[]>(13);
     private int lastval = 0;
     public bool CanIGo = true;
+    private List<int[]> roomsWhereIwas = new List<int[]>();
+    private Enemy[] isAnyoneHere;
+
     //Dictionary<string, float[]> coord = new Dictionary<string, float[]>(13);
     // Start is called before the first frame update
     void Start()
@@ -311,6 +320,11 @@ public class ChangeLocation : MonoBehaviour
     }
     void TeleportAndSpawn(GameObject Player, string what_door)
     {
+        if (!roomsWhereIwas.Contains(new int[]{ curent_posX, curent_posY }))
+        {
+            TimeForExit += 1;
+            roomsWhereIwas.Add(new int[] { curent_posX, curent_posY });
+        }             
         switch (what_door[0].ToString())
         {
             case "f":
@@ -563,6 +577,47 @@ public class ChangeLocation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        isAnyoneHere = FindObjectsOfType<Enemy>();
+        if (isAnyoneHere.Length == 0)
+        {
+
+            CanIGo = true;
+        }
+        else
+        {
+            CanIGo = false;
+        }
+        if (CanIGo)
+        {
+            if (map[curent_posX - 1, curent_posY] == "*")
+            {
+                up_doors.SetActive(true);
+            }
+            if (map[curent_posX, curent_posY - 1] == "*")
+            {
+                left_doors.SetActive(true);
+            }
+            if (map[curent_posX + 1, curent_posY] == "*")
+            {
+                down_doors.SetActive(true);
+            }
+            if (map[curent_posX, curent_posY + 1] == "*")
+            {
+                right_doors.SetActive(true);
+            }
+            doors_open.SetActive(false);
+            if (TimeForExit == 9)
+            {
+                Instantiate(Exit, transform.position, Quaternion.identity);
+                TimeForExit = 0;
+            }
+        } else
+        {
+            up_doors.SetActive(false);
+            left_doors.SetActive(false);
+            down_doors.SetActive(false);
+            right_doors.SetActive(false);
+            doors_open.SetActive(true);
+        }
     }
 }

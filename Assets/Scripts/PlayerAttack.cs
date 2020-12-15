@@ -10,12 +10,13 @@ public class PlayerAttack : MonoBehaviour
     public Transform attackPos;
     public LayerMask enemy;
     public float attackRange;
-    public int Dmg;
+    private int Dmg;
     public Animator anim;
     // Start is called before the first frame update
     void Start()
     {
-        
+        var Player = FindObjectOfType<CharacterControllerScript>();
+        Dmg = Player.dmg;
     }
 
     // Update is called once per frame

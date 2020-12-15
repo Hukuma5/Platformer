@@ -14,7 +14,7 @@ public class CharacterControllerScript : MonoBehaviour {
     private float groundRadius = 0.2f;
     public LayerMask whatIsGround;
     public static bool fly = false;
-    public static float dmg = 1f;
+    public int dmg = 1;
     private int count = 1;
     private float move = 0f;
     //public GameObject DmgZone;
@@ -25,6 +25,7 @@ public class CharacterControllerScript : MonoBehaviour {
     private bool dash = false;
     private int count_dash = 1;
     private int dashTime = 0;
+    private float starttimefordash;
     public int hp;
     public int maxhp = 10;
     private bool flag = true;
@@ -35,8 +36,15 @@ public class CharacterControllerScript : MonoBehaviour {
     private Vector3 lastpos;
     public GameObject deatheffect;
     private Enemy[] isAnyoneHere;
+    public float timefordash;
+    public GameObject hubscene;
+    public GameObject HPBuffeff;
+    public GameObject DMGBuffeff;
     private void Start()
     {
+        Time.timeScale = 1;
+        LoadCharacter();
+        starttimefordash = timefordash;
         hp = maxhp;
         transform.position = pos.InitialValue;
         anim = GetComponent<Animator>();
@@ -77,20 +85,17 @@ public class CharacterControllerScript : MonoBehaviour {
 
     private void Update()
     {
-        lastpos = transform.position;
+        if (hp <= 0)
+        {
+            SaveLoad.AutoSaveGame(this);
+            hubscene.SetActive(true);
+        }
+        if (isGrounded)
+        {
+            lastpos = transform.position;
+        }
         moneycount.text = coins.ToString();
-        isAnyoneHere = FindObjectsOfType<Enemy>();
-        Debug.Log(isAnyoneHere.Length);
-        var Pl = FindObjectOfType<ChangeLocation>();
-        if (isAnyoneHere.Length == 0)
-        {
-           
-            Pl.CanIGo = true;
-        }
-        else
-        {
-            Pl.CanIGo = false;
-        }
+        
         if (!stunLock)
         {
             if (!dash)
@@ -124,8 +129,10 @@ public class CharacterControllerScript : MonoBehaviour {
                     return;
                 }
             }
-            if (Input.GetKeyDown(KeyCode.LeftShift) && count_dash == 1)
+            starttimefordash -= Time.deltaTime;
+            if (Input.GetKeyDown(KeyCode.LeftShift) && count_dash == 1 && starttimefordash <= 0)
             {
+                starttimefordash = timefordash;
                 if (isFacingRight)
                 {
                     rb.gravityScale = 0f;
@@ -227,17 +234,56 @@ private void Flip()
         theScale.x *= -1;
         transform.localScale = theScale;
     }
-    public void LoadCharacter()
+    public void AutoLoadCharacter()
     {
-        SaveData data = SaveLoad.LoadGame(); //Получение данных
-        if (!data.Equals(null)) //Если данные есть
+        if (curentScene == "1")
+        {
+            hubscene.SetActive(true);
+        }
+        SaveData data = SaveLoad.AutoLoadGame();
+        if (!data.Equals(null))
         {
             maxhp = data.HP;
-            hp = data.currHP;
-            transform.position = new Vector3(data.position[0], data.position[1], data.position[2]);
+            //hp = data.currHP;
+            coins = data.money;
+            dmg = data.DMG;
+            transform.position = new Vector3(0f, 0f, 0f);
             stunLocktimer = 0f;
             stunLock = true;
         }
+    }
+    public void LoadCharacter()
+    {
+        SaveData data = SaveLoad.AutoLoadGame();
+        if (!data.Equals(null))
+        {
+            maxhp = data.HP;
+          //hp = data.currHP;
+            coins = data.money;
+            dmg = data.DMG;
+            transform.position = new Vector3(0f, 0f, 0f);
+            stunLocktimer = 0f;
+            stunLock = true;
+        }
+    }
+
+    public void BuyHpBuff()
+    {
+        
+        CharacterControllerScript player = FindObjectOfType<CharacterControllerScript>();
+        Instantiate(HPBuffeff, player.transform.position, Quaternion.identity);
+        player.coins -= 100;
+        player.maxhp += 1;      
+        SaveLoad.AutoSaveGame(player);
+    }
+
+    public void BuyDmgBuff()
+    {
+        CharacterControllerScript player = FindObjectOfType<CharacterControllerScript>();
+        Instantiate(DMGBuffeff, player.transform.position, Quaternion.identity);
+        player.coins -= 100;
+        player.dmg += 1;
+        SaveLoad.AutoSaveGame(player);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

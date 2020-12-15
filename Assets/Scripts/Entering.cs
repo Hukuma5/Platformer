@@ -11,7 +11,11 @@ public class Entering : MonoBehaviour
     private bool flag = false;
     public Vector3 position;
     public VectorValue playerStroge;
-
+    private CharacterControllerScript player;
+    private void Start()
+    {
+        player = FindObjectOfType<CharacterControllerScript>();
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         flag = !flag;
@@ -27,6 +31,8 @@ public class Entering : MonoBehaviour
         if (flag && Input.GetKeyDown(KeyCode.W))
         {
             playerStroge.InitialValue = position;
+            SaveLoad.AutoSaveGame(player);
+            CharacterControllerScript.previousScene = "dungeon";
             LoadingBarShop.SetActive(true);
         }
  

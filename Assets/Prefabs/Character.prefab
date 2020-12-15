@@ -196,15 +196,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08bb503dd3a556849b9ff377bfedfe82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moneycount: {fileID: 0}
   maxSpeed: 5
   groundCheck: {fileID: 3475148923628900135}
   whatIsGround:
     serializedVersion: 2
     m_Bits: 256
-  DmgZone: {fileID: 0}
   hp: 20
   maxhp: 10
   pos: {fileID: 0}
+  coins: 0
+  deatheffect: {fileID: 0}
+  timefordash: 0.5
 --- !u!114 &3475148924067445922
 MonoBehaviour:
   m_ObjectHideFlags: 0

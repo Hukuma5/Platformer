@@ -118,14 +118,7 @@ public class Menu : MonoBehaviour {
     //Load
     public void LoadGame()
     {
-        player.LoadCharacter();
-        //SaveData data = SaveLoad.LoadGame(); //Получение данных
-        //if (!data.Equals(null)) //Если данные есть
-        //{
-        //    player.maxhp = data.HP;
-        //    player.hp = data.currHP;
-        //    player.transform.position = new Vector3(data.position[0], data.position[1], data.position[2]);
-        //}
+        player.AutoLoadCharacter();
     }
 
 
