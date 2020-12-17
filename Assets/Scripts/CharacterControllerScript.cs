@@ -271,19 +271,25 @@ private void Flip()
     {
         
         CharacterControllerScript player = FindObjectOfType<CharacterControllerScript>();
-        Instantiate(HPBuffeff, player.transform.position, Quaternion.identity);
-        player.coins -= 100;
-        player.maxhp += 1;      
-        SaveLoad.AutoSaveGame(player);
+        if (player.coins - 100 >= 0)
+        {
+            Instantiate(HPBuffeff, player.transform.position, Quaternion.identity);
+            player.coins -= 100;
+            player.maxhp += 1;
+            SaveLoad.AutoSaveGame(player);
+        }
     }
 
     public void BuyDmgBuff()
     {
         CharacterControllerScript player = FindObjectOfType<CharacterControllerScript>();
-        Instantiate(DMGBuffeff, player.transform.position, Quaternion.identity);
-        player.coins -= 100;
-        player.dmg += 1;
-        SaveLoad.AutoSaveGame(player);
+        if (player.coins - 100 >= 0)
+        {
+            Instantiate(DMGBuffeff, player.transform.position, Quaternion.identity);
+            player.coins -= 100;
+            player.dmg += 1;
+            SaveLoad.AutoSaveGame(player);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -300,12 +306,19 @@ private void Flip()
         }
         if (collision.tag == "Spike")
         {
-            hp -= 10;
-            rb.velocity = new Vector2(0f, 0f);
-            stunLocktimer = 0f;
-            stunLock = true;
-            Instantiate(deatheffect, transform.position, Quaternion.identity);
-            transform.position = lastpos;
+            if (!dash)
+            {
+                hp -= 10;
+                rb.velocity = new Vector2(0f, 0f);
+                stunLocktimer = 0f;
+                stunLock = true;
+                Instantiate(deatheffect, transform.position, Quaternion.identity);
+                transform.position = lastpos;
+            }
+            else
+            {
+                hp -= 10;
+            }
         }
     }
 }
