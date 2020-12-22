@@ -129,7 +129,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void Flip()
+    public void Flip()
     {
         isFacingRight = !isFacingRight;
         Vector3 theScale = transform.localScale;

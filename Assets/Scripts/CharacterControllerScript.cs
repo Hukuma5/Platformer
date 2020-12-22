@@ -6,10 +6,10 @@ using UnityEngine.UI;
 public class CharacterControllerScript : MonoBehaviour {
     public Text moneycount;
     public float maxSpeed = 5f;
-    private bool isFacingRight = true;
+    public bool isFacingRight = true;
     private Animator anim;
     private Rigidbody2D rb;
-    private bool isGrounded = false;
+    public bool isGrounded = false;
     public Transform groundCheck;
     private float groundRadius = 0.2f;
     public LayerMask whatIsGround;
@@ -46,18 +46,18 @@ public class CharacterControllerScript : MonoBehaviour {
         LoadCharacter();
         starttimefordash = timefordash;
         hp = maxhp;
-        transform.position = pos.InitialValue;
+        //transform.position = pos.InitialValue;
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         if (previousScene == "Shop" && curentScene == "main")
         {
             rb.transform.position = new Vector3(9.91f, 1.78f, -1f);
         }
-        
+        isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundRadius, whatIsGround);
     }
     private void FixedUpdate()
     {
-        isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundRadius, whatIsGround);
+        
         anim.SetBool("Ground", isGrounded);
         anim.SetFloat("vSpeed", rb.velocity.y);
         //if (!isGrounded)
@@ -85,6 +85,7 @@ public class CharacterControllerScript : MonoBehaviour {
 
     private void Update()
     {
+        isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundRadius, whatIsGround);
         if (hp <= 0)
         {
             SaveLoad.AutoSaveGame(this);
@@ -227,7 +228,7 @@ public class CharacterControllerScript : MonoBehaviour {
     ////}
 
 
-private void Flip()
+    public void Flip()
     {
         isFacingRight = !isFacingRight;
         Vector3 theScale = transform.localScale;
@@ -261,7 +262,7 @@ private void Flip()
           //hp = data.currHP;
             coins = data.money;
             dmg = data.DMG;
-            transform.position = new Vector3(0f, 0f, 0f);
+            transform.position = new Vector3(0f, -2f, 0f);
             stunLocktimer = 0f;
             stunLock = true;
         }
@@ -276,6 +277,7 @@ private void Flip()
             Instantiate(HPBuffeff, player.transform.position, Quaternion.identity);
             player.coins -= 100;
             player.maxhp += 1;
+            player.hp = player.maxhp;
             SaveLoad.AutoSaveGame(player);
         }
     }
