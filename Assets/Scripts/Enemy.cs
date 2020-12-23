@@ -122,7 +122,7 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Platform")
+        if (collision.tag == "Platform" || collision.tag == "Spike")
         {
             Debug.Log("boom1");
             Flip();

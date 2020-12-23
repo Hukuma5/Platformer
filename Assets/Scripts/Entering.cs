@@ -31,7 +31,9 @@ public class Entering : MonoBehaviour
         if (flag && Input.GetKeyDown(KeyCode.W))
         {
             playerStroge.InitialValue = position;
+            Debug.Log("flag");
             SaveLoad.AutoSaveGame(player);
+            Debug.Log("saved");
             CharacterControllerScript.previousScene = "dungeon";
             LoadingBarShop.SetActive(true);
         }

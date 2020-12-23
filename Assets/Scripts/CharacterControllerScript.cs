@@ -40,6 +40,8 @@ public class CharacterControllerScript : MonoBehaviour {
     public GameObject hubscene;
     public GameObject HPBuffeff;
     public GameObject DMGBuffeff;
+    public int spikeDMG = 10;
+
     private void Start()
     {
         Time.timeScale = 1;
@@ -319,7 +321,7 @@ public class CharacterControllerScript : MonoBehaviour {
             }
             else
             {
-                hp -= 10;
+                hp -= spikeDMG;
             }
         }
     }
