@@ -5,6 +5,19 @@ TagManager:
   serializedVersion: 2
   tags:
   - Weapon
+  - Opponent
+  - left_door
+  - right_door
+  - down_door
+  - up_door
+  - Ground_enemy
+  - Enemy
+  - Undefined
+  - Platform
+  - Flying_Enemy
+  - Coin
+  - Big_Coin
+  - Spike
   layers:
   - Default
   - TransparentFX
@@ -16,10 +29,10 @@ TagManager:
   - 
   - Ground
   - Weapon
-  - 
-  - 
-  - 
-  - 
+  - BG
+  - Enemy
+  - Player
+  - Coins
   - 
   - 
   - 
