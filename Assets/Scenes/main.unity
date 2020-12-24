@@ -158,8 +158,7 @@ PrefabInstance:
         type: 3}
       propertyPath: moneycount
       value: 
-      objectReference: {fileID: 6371125140634814851, guid: ae863b96c1814174fba8ad254431ffb5,
-        type: 3}
+      objectReference: {fileID: 6371125139776059295}
     - target: {fileID: 3475148924067445921, guid: 818daa69c4661724f86f261f9ad30178,
         type: 3}
       propertyPath: deatheffect
@@ -178,6 +177,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2113553808295160862, guid: 6581e6fb8463d474abf4f469e930466a,
         type: 3}
+    - target: {fileID: 3475148924067445921, guid: 818daa69c4661724f86f261f9ad30178,
+        type: 3}
+      propertyPath: coins
+      value: 150
+      objectReference: {fileID: 0}
     - target: {fileID: 3475148924067445923, guid: 818daa69c4661724f86f261f9ad30178,
         type: 3}
       propertyPath: m_Name
