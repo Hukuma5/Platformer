@@ -32,5 +32,5 @@
 ![test](https://user-images.githubusercontent.com/56276244/103096345-b41cab00-4614-11eb-8422-6fd833b952b8.JPG)  
 
 ## Полезные ссылки
-Ссылка на сбилденный проект -    
+Ссылка на сбилденный проект - https://developer.cloud.unity3d.com/share/share.html?shareId=bkoKzjVwt8
 
